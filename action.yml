@@ -19,11 +19,11 @@ runs:
   using: "composite"
   steps:
 
-    - name: perl info
+    - name: setup
       id: perl
       shell: bash
       run: |
-        module="${{ inputs.modules }}"
+        modules="${{ inputs.modules }}"
         cache_gen="${{ inputs.cache_gen }}"
         install="${{ inputs.install }}"
         : ${install:=$HOME/perl5}
@@ -34,8 +34,7 @@ runs:
           PERL5LIB=$install/lib/perl5
           PERL_LOCAL_LIB_ROOT=$install
         END
-        hash=$( (perl -V; echo $cache_gen) | md5sum | awk '{print $1}')
-        echo "::set-output name=module::$module"
+        hash=$( (perl -V; echo $cache_gen $modules) | md5sum | awk '{print $1}')
         echo "::set-output name=install::$install"
         echo "::set-output name=hash::$hash"
         perl -v
@@ -54,8 +53,7 @@ runs:
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
   
     - name: install modules
-      if: ${{ steps.perl.outputs.module != '' }}
+      if: ${{ inputs.modules != '' }}
       shell: bash
       run: |
-        module="${{ steps.perl.outputs.module }}"
-        cpanm -n $module
+        cpanm -n ${{ inputs.modules }}
