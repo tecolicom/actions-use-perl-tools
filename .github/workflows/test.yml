@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  simple:
+  initial:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
           echo $HOME
           (cd $HOME; tree perl5)
   cached:
-    needs: simple
+    needs: initial
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,7 +29,7 @@ jobs:
           modules: Acme
       - run: (cd $HOME; tree perl5)
   no-cache:
-    needs: simple
+    needs: initial
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
           cache: no
       - run: (cd $HOME; tree perl5)
   install-dir:
-    needs: simple
+    needs: initial
     runs-on: ubuntu-latest
     steps:
       - id: setup
@@ -53,7 +53,7 @@ jobs:
           install: ${{ steps.setup.outputs.home }}/perl5.d
       - run: (cd $HOME; tree perl5.d)
   relative-install-dir:
-    needs: simple
+    needs: install-dir
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
           install: perl5.d
       - run: (cd $HOME; tree perl-d)
   cache-gen:
-    needs: simple
+    needs: initial
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
