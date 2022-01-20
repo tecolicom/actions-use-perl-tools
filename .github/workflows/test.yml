@@ -13,7 +13,7 @@ jobs:
       - uses: ./
         with:
           modules: Acme
-      - run: tree
+      - run: (cd $HOME; tree)
   no-cache:
     needs: simple
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
         with:
           modules: Acme
           cache: no
-      - run: tree
+      - run: (cd $HOME; tree)
   install-dir:
     needs: simple
     runs-on: ubuntu-latest
@@ -32,8 +32,18 @@ jobs:
       - uses: ./
         with:
           modules: Acme
-          install: perl5.d
-      - run: tree
+          install: ${{ env.HOME }}/perl5.d
+      - run: (cd $HOME; tree)
+  relative-install-dir:
+    needs: simple
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          modules: Acme
+          install: perl5-d
+      - run: (cd $HOME; tree)
   cache-gen:
     needs: simple
     runs-on: ubuntu-latest
@@ -43,4 +53,4 @@ jobs:
         with:
           modules: Acme
           cache_gen: v2
-      - run: tree
+      - run: (cd $HOME; tree)
