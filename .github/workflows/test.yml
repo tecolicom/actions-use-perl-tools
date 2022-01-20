@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: workflow
           modules: Acme
       - run: |
           pwd
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: workflow
           modules: Acme
       - run: (cd $HOME; tree perl5)
   no-cache:
@@ -35,9 +35,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: no
           modules: Acme
-          cache: false
       - run: (cd $HOME; tree perl5)
   install-dir:
     needs: initial
@@ -48,7 +47,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: workflow
           modules: Acme
           install_base: ${{ steps.setup.outputs.home }}/perl5.d
       - run: (cd $HOME; tree perl5.d)
@@ -59,7 +58,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: workflow
           modules: Acme
           install_base: perl5.d
       - run: (cd $HOME; tree perl-d)
@@ -70,7 +69,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          unique: true
+          cache: workflow
           modules: Acme
           cache_gen: v2
       - run: (cd $HOME; tree perl5)

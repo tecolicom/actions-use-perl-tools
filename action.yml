@@ -3,19 +3,18 @@ name: install/cache perl modules
 inputs:
   modules:      { required: true,  type: string }
   install_base: { required: false, type: string }
-  cache:        { required: false, type: boolean, default: true }
+  cache:        { required: false, type: string,  default: yes }
   cache_gen:    { required: false, type: string,  default: v1 }
-  unique:       { required: false, type: boolean, default: false }
 
 runs:
   using: composite
   steps:
 
-    - name: setup
-      id: setup
+    - id: setup
       shell: bash
       run: |
         modules="${{ inputs.modules }}"
+        cache="${{ inputs.cache }}"
         cache_gen="${{ inputs.cache_gen }}"
         install_base="${{ inputs.install_base }}"
         [[ "$install_base" =~ ^[^/] ]] && install_base="$HOME/$install_base"
@@ -28,13 +27,13 @@ runs:
           PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
         hash=$( (perl -V; echo $cache_gen $modules) | md5sum | awk '{print $1}')
-        [ "${{ inputs.unique }}" == 'true' ] && hash=$hash-${{ github.run_id }}
+        [ "$cache" == 'workflow' ] && hash=$hash-${{ github.run_id }}
         echo "::set-output name=install_base::$install_base"
         echo "::set-output name=hash::$hash"
         perl -v
   
     - name: cache
-      if: inputs.cache == 'true'
+      if: inputs.cache == 'yes' || inputs.cache == 'workflow'
       uses: actions/cache@v2
       with:
         path: ${{ steps.setup.outputs.install_base }}
