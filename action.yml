@@ -7,11 +7,11 @@ inputs:
   cache_gen: { required: false, type: string, default: v1 }
 
 runs:
-  using: "composite"
+  using: composite
   steps:
 
     - name: setup
-      id: perl
+      id: setup
       shell: bash
       run: |
         modules="${{ inputs.modules }}"
@@ -22,24 +22,25 @@ runs:
         sed 's/^ *//' << END >> $GITHUB_ENV
           PERL_MB_OPT=--install_base "$install"
           PERL_MM_OPT=INSTALL_BASE=$install
-          PERL5LIB=$install/lib/perl5
-          PERL_LOCAL_LIB_ROOT=$install
+          PERL5LIB=$install/lib/perl5${PERL5LIB:+:$PERL5LIB}
+          PERL_LOCAL_LIB_ROOT=$install${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
         hash=$( (perl -V; echo $cache_gen $modules) | md5sum | awk '{print $1}')
         echo "::set-output name=install::$install"
         echo "::set-output name=hash::$hash"
         perl -v
   
-    - name: cache perl
+    - name: cache
       if: inputs.cache == 'yes'
       uses: actions/cache@v2
       with:
-        path: ${{ steps.perl.outputs.install }}
-        key:  ${{ steps.perl.outputs.hash }}
+        path: ${{ steps.setup.outputs.install }}
+        key:  ${{ steps.setup.outputs.hash }}
   
     - name: install cpanminus
       shell: bash
       run: |
+        install="${{ steps.setup.outputs.install }}"
         perl -MApp::cpanminus -E 'say "App::cpanminus is installed."' || \
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
   
@@ -47,4 +48,5 @@ runs:
       if: ${{ inputs.modules != '' }}
       shell: bash
       run: |
+        install="${{ steps.setup.outputs.install }}"
         cpanm -n ${{ inputs.modules }}
