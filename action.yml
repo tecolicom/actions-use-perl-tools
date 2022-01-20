@@ -3,8 +3,8 @@ name: install/cache perl modules
 inputs:
   modules:      { required: true,  type: string }
   install_base: { required: false, type: string }
-  cache:        { required: false, type: string,  default: yes }
-  cache_gen:    { required: false, type: string,  default: v1 }
+  cache:        { required: false, type: string, default: yes }
+  cache_gen:    { required: false, type: string, default: v1 }
 
 runs:
   using: composite
@@ -32,7 +32,7 @@ runs:
         echo "::set-output name=hash::$hash"
         perl -v
   
-    - name: cache
+    - id: cache
       if: inputs.cache == 'yes' || inputs.cache == 'workflow'
       uses: actions/cache@v2
       with:
