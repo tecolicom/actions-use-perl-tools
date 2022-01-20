@@ -13,7 +13,10 @@ jobs:
       - uses: ./
         with:
           modules: Acme
-      - run: (cd $HOME; tree)
+      - run: |
+          pwd
+          echo $HOME
+          (cd $HOME; tree perl5)
   no-cache:
     needs: simple
     runs-on: ubuntu-latest
@@ -23,17 +26,19 @@ jobs:
         with:
           modules: Acme
           cache: no
-      - run: (cd $HOME; tree)
+      - run: (cd $HOME; tree perl5)
   install-dir:
     needs: simple
     runs-on: ubuntu-latest
     steps:
+      - id: setup
+        run: echo "::set-output name=home::$HOME"
       - uses: actions/checkout@v2
       - uses: ./
         with:
           modules: Acme
-          install: ${{ env.HOME }}/perl5.d
-      - run: (cd $HOME; tree)
+          install: ${{ steps.setup.outputs.home }}/perl5.d
+      - run: (cd $HOME; tree perl5.d)
   relative-install-dir:
     needs: simple
     runs-on: ubuntu-latest
@@ -43,7 +48,7 @@ jobs:
         with:
           modules: Acme
           install: perl5-d
-      - run: (cd $HOME; tree)
+      - run: (cd $HOME; tree perl-d)
   cache-gen:
     needs: simple
     runs-on: ubuntu-latest
@@ -53,4 +58,4 @@ jobs:
         with:
           modules: Acme
           cache_gen: v2
-      - run: (cd $HOME; tree)
+      - run: (cd $HOME; tree perl5)

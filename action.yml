@@ -17,7 +17,7 @@ runs:
         modules="${{ inputs.modules }}"
         cache_gen="${{ inputs.cache_gen }}"
         install="${{ inputs.install }}"
-        [[ "$install" =~ ^[^/] ]] && $intall="$HOME/$install"
+        [[ "$install" =~ ^[^/] ]] && install="$HOME/$install"
         : ${install:=$HOME/perl5}
         echo "$install/bin" >> $GITHUB_PATH
         sed 's/^ *//' << END >> $GITHUB_ENV
