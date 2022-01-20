@@ -5,7 +5,7 @@ inputs:
   install:   { required: false, type: string }
   cache:     { required: false, type: string, default: yes }
   cache_gen: { required: false, type: string, default: v1 }
-  clean:     { required: false, type: boolean, default: false }
+  unique:    { required: false, type: boolean, default: false }
 
 runs:
   using: composite
@@ -28,7 +28,7 @@ runs:
           PERL_LOCAL_LIB_ROOT=$install${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
         hash=$( (perl -V; echo $cache_gen $modules) | md5sum | awk '{print $1}')
-        [ "${{ inputs.clean }}" == 'true' ] && hash=$hash-${{ github.run_id }}
+        [ "${{ inputs.unique }}" == 'true' ] && hash=$hash-${{ github.run_id }}
         echo "::set-output name=install::$install"
         echo "::set-output name=hash::$hash"
         perl -v

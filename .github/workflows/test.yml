@@ -12,12 +12,22 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          clean: true
+          unique: true
           modules: Acme
       - run: |
           pwd
           echo $HOME
           (cd $HOME; tree perl5)
+  cached:
+    needs: simple
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          unique: true
+          modules: Acme
+      - run: (cd $HOME; tree perl5)
   no-cache:
     needs: simple
     runs-on: ubuntu-latest
@@ -25,7 +35,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          clean: true
+          unique: true
           modules: Acme
           cache: no
       - run: (cd $HOME; tree perl5)
@@ -38,7 +48,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          clean: true
+          unique: true
           modules: Acme
           install: ${{ steps.setup.outputs.home }}/perl5.d
       - run: (cd $HOME; tree perl5.d)
@@ -49,9 +59,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          clean: true
+          unique: true
           modules: Acme
-          install: perl5-d
+          install: perl5.d
       - run: (cd $HOME; tree perl-d)
   cache-gen:
     needs: simple
@@ -60,7 +70,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          clean: true
+          unique: true
           modules: Acme
           cache_gen: v2
       - run: (cd $HOME; tree perl5)
