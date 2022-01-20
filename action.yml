@@ -1,11 +1,11 @@
 name: install/cache perl modules
 
 inputs:
-  modules:   { required: true,  type: string }
-  install:   { required: false, type: string }
-  cache:     { required: false, type: string, default: yes }
-  cache_gen: { required: false, type: string, default: v1 }
-  unique:    { required: false, type: boolean, default: false }
+  modules:      { required: true,  type: string }
+  install_base: { required: false, type: string }
+  cache:        { required: false, type: boolean, default: true }
+  cache_gen:    { required: false, type: string,  default: v1 }
+  unique:       { required: false, type: boolean, default: false }
 
 runs:
   using: composite
@@ -17,33 +17,32 @@ runs:
       run: |
         modules="${{ inputs.modules }}"
         cache_gen="${{ inputs.cache_gen }}"
-        install="${{ inputs.install }}"
-        [[ "$install" =~ ^[^/] ]] && install="$HOME/$install"
-        : ${install:=$HOME/perl5}
-        echo "$install/bin" >> $GITHUB_PATH
+        install_base="${{ inputs.install_base }}"
+        [[ "$install_base" =~ ^[^/] ]] && install_base="$HOME/$install_base"
+        : ${install_base:=$HOME/perl5}
+        echo "$install_base/bin" >> $GITHUB_PATH
         sed 's/^ *//' << END >> $GITHUB_ENV
-          PERL_MB_OPT=--install_base "$install"
-          PERL_MM_OPT=INSTALL_BASE=$install
-          PERL5LIB=$install/lib/perl5${PERL5LIB:+:$PERL5LIB}
-          PERL_LOCAL_LIB_ROOT=$install${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
+          PERL_MB_OPT=--install_base "$install_base"
+          PERL_MM_OPT=INSTALL_BASE=$install_base
+          PERL5LIB=$install_base/lib/perl5${PERL5LIB:+:$PERL5LIB}
+          PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
         hash=$( (perl -V; echo $cache_gen $modules) | md5sum | awk '{print $1}')
         [ "${{ inputs.unique }}" == 'true' ] && hash=$hash-${{ github.run_id }}
-        echo "::set-output name=install::$install"
+        echo "::set-output name=install_base::$install_base"
         echo "::set-output name=hash::$hash"
         perl -v
   
     - name: cache
-      if: inputs.cache == 'yes'
+      if: inputs.cache == 'true'
       uses: actions/cache@v2
       with:
-        path: ${{ steps.setup.outputs.install }}
+        path: ${{ steps.setup.outputs.install_base }}
         key:  ${{ steps.setup.outputs.hash }}
   
     - name: install cpanminus
       shell: bash
       run: |
-        install="${{ steps.setup.outputs.install }}"
         perl -MApp::cpanminus -E 'say "App::cpanminus is installed."' || \
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
   
@@ -51,5 +50,4 @@ runs:
       if: ${{ inputs.modules != '' }}
       shell: bash
       run: |
-        install="${{ steps.setup.outputs.install }}"
         cpanm -n ${{ inputs.modules }}

@@ -37,7 +37,7 @@ jobs:
         with:
           unique: true
           modules: Acme
-          cache: no
+          cache: false
       - run: (cd $HOME; tree perl5)
   install-dir:
     needs: initial
@@ -50,7 +50,7 @@ jobs:
         with:
           unique: true
           modules: Acme
-          install: ${{ steps.setup.outputs.home }}/perl5.d
+          install_base: ${{ steps.setup.outputs.home }}/perl5.d
       - run: (cd $HOME; tree perl5.d)
   relative-install-dir:
     needs: install-dir
@@ -61,7 +61,7 @@ jobs:
         with:
           unique: true
           modules: Acme
-          install: perl5.d
+          install_base: perl5.d
       - run: (cd $HOME; tree perl-d)
   cache-gen:
     needs: initial
