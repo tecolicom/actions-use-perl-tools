@@ -1,0 +1,46 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  simple:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          modules: Acme
+      - run: tree
+  no-cache:
+    needs: simple
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          modules: Acme
+          cache: no
+      - run: tree
+  install-dir:
+    needs: simple
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          modules: Acme
+          install: perl5.d
+      - run: tree
+  cache-gen:
+    needs: simple
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          modules: Acme
+          cache_gen: v2
+      - run: tree
