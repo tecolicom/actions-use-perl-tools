@@ -19,7 +19,7 @@ runs:
       run: |
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
-          *) cache= ;;
+          *) cache='' ;;
         esac
         tools="${{ inputs.tools }}"
         cache_gen="${{ inputs.cache_gen }}"
@@ -36,12 +36,13 @@ runs:
         hash=$( (perl -V; echo $tools) | md5sum | awk '{print $1}')
         [ "cache_gen" != '' ] && hash="$hash-$cache_gen"
         [ "$cache" == workflow ] && hash="$hash-${{ github.run_id }}"
+        echo "::set-output name=cache::$cache"
         echo "::set-output name=install_base::$install_base"
         echo "::set-output name=hash::$hash"
         perl -v
   
     - id: cache
-      if: inputs.cache != ''
+      if: steps.setup.outputs.cache != ''
       uses: actions/cache@v2
       with:
         path: ${{ steps.setup.outputs.install_base }}
