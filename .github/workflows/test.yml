@@ -97,6 +97,7 @@ jobs:
           cache_gen: v2
           perl-version: '5.18'
       - run: perl -v
+      - run: perl -E 'exit $^V !~ /^v5\.18/'
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   perl-version-cached:

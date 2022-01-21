@@ -15,6 +15,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   install_base: { required: false, type: string }
 #   cache:        { required: false, type: string, default: yes }
 #   cache_gen:    { required: false, type: string, default: v1 }
+#   perl-version: { required: false, type: string }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
@@ -35,13 +36,16 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # anything else means 'no'
     cache: yes
 
-    #
     # Cache generation.
     # You can set any string to this parameter and different generation
     # number produces different cache key.
     #
     # Default: v1
     cache_gen: 'v1'
+
+    # Specify perl version
+    # System installed perl is used by default.
+    perl-version: ''
 
 ```
 

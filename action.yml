@@ -41,7 +41,7 @@ runs:
           PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
         hash=$( (perl -V; echo $tools) | md5sum | awk '{print $1}')
-        [ "cache_gen" != '' ] && hash="$hash-$cache_gen"
+        [ "$cache_gen" != '' ] && hash="$hash-$cache_gen"
         [ "$cache" == workflow ] && hash="$hash-${{ github.run_id }}"
         echo "::set-output name=cache::$cache"
         echo "::set-output name=install_base::$install_base"
