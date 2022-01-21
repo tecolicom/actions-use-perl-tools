@@ -16,8 +16,8 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::week
-      - run: week 1752/9/15
+          tools: App::ansiecho
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
     needs: initial
@@ -28,8 +28,8 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::week
-      - run: week 1752/9/15
+          tools: App::ansiecho
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
     needs: initial
@@ -40,8 +40,8 @@ jobs:
         id: action
         with:
           cache: no
-          tools: App::week
-      - run: week 1752/9/15
+          tools: App::ansiecho
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   install-dir:
     needs: initial
@@ -54,9 +54,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::week
+          tools: App::ansiecho
           install_base: ${{ steps.setup.outputs.home }}/perl
-      - run: week 1752/9/15
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   relative-install-dir:
     needs: install-dir
@@ -67,9 +67,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::week
+          tools: App::ansiecho
           install_base: perl
-      - run: week 1752/9/15
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   cache-gen:
     needs: initial
@@ -80,7 +80,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::week
+          tools: App::ansiecho
           cache_gen: v2
-      - run: week 1752/9/15
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
