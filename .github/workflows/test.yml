@@ -113,4 +113,4 @@ jobs:
           perl-version: '5.18'
       - run: perl -v
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
-      - run: test "${{ steps.action.outputs.cache-hit }}" != true
+      - run: test "${{ steps.action.outputs.cache-hit }}" == true
