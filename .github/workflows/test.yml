@@ -16,7 +16,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: App::ansiecho Acme
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
@@ -28,7 +28,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: |
+            App::ansiecho
+            Acme
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
@@ -40,7 +42,7 @@ jobs:
         id: action
         with:
           cache: no
-          tools: App::ansiecho
+          tools: App::ansiecho Acme
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   install-dir:
@@ -54,7 +56,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: App::ansiecho Acme
           install-base: ${{ steps.setup.outputs.home }}/perl
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
@@ -67,7 +69,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: >-
+            App::ansiecho
+            Acme
           install-base: perl
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
@@ -80,7 +84,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: App::ansiecho Acme
           cache-gen: v2
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
@@ -93,7 +97,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: App::ansiecho Acme
           perl-version: '5.18'
       - run: perl -v
       - run: perl -E 'exit $^V !~ /^v5\.18/'
@@ -108,7 +112,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho
+          tools: >
+            App::ansiecho
+            Acme
           perl-version: '5.18'
       - run: perl -v
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
