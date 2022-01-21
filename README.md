@@ -15,7 +15,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 #   install-base: { required: false, type: string }
 #   cache:        { required: false, type: string, default: yes }
 #   cache-gen:    { required: false, type: string, default: v1 }
-#   perl-version: { required: false, type: string }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
@@ -42,11 +41,6 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     #
     # Default: v1
     cache-gen: v1
-
-    # Specify perl version
-    # System installed perl is used by default.
-    perl-version: ''
-
 ```
 
 ## Side effects
@@ -97,7 +91,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
-### specify istall directory
+### specify install directory
 
 If the directory start with /, it is taken as a full path.  If not, it
 is considered as relative from home directory.
