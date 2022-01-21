@@ -12,9 +12,9 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ```
 # inputs:
 #   tools:        { required: true,  type: string }
-#   install_base: { required: false, type: string }
+#   install-base: { required: false, type: string }
 #   cache:        { required: false, type: string, default: yes }
-#   cache_gen:    { required: false, type: string, default: v1 }
+#   cache-gen:    { required: false, type: string, default: v1 }
 #   perl-version: { required: false, type: string }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
@@ -26,7 +26,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # INSTALL_BASE directory
     #
     # Default: ~/perl5
-    install_base: ''
+    install-base: ''
 
     # Cache strategey
     #
@@ -41,7 +41,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     # number produces different cache key.
     #
     # Default: v1
-    cache_gen: 'v1'
+    cache-gen: v1
 
     # Specify perl version
     # System installed perl is used by default.
@@ -84,7 +84,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ```yml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
-    cache_gen: v2
+    cache-gen: v2
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
@@ -96,6 +96,6 @@ is considered as relative from home directory.
 ```yml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
-    install_base: perl
+    install-base: perl
     tools: App::Greple App::optex::textconv App::sdif
 ```

@@ -55,7 +55,7 @@ jobs:
         with:
           cache: workflow
           tools: App::ansiecho
-          install_base: ${{ steps.setup.outputs.home }}/perl
+          install-base: ${{ steps.setup.outputs.home }}/perl
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   relative-install-dir:
@@ -68,7 +68,7 @@ jobs:
         with:
           cache: workflow
           tools: App::ansiecho
-          install_base: perl
+          install-base: perl
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   cache-gen:
@@ -81,7 +81,7 @@ jobs:
         with:
           cache: workflow
           tools: App::ansiecho
-          cache_gen: v2
+          cache-gen: v2
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   perl-version:
@@ -94,7 +94,6 @@ jobs:
         with:
           cache: workflow
           tools: App::ansiecho
-          cache_gen: v2
           perl-version: '5.18'
       - run: perl -v
       - run: perl -E 'exit $^V !~ /^v5\.18/'
@@ -110,7 +109,6 @@ jobs:
         with:
           cache: workflow
           tools: App::ansiecho
-          cache_gen: v2
           perl-version: '5.18'
       - run: perl -v
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l

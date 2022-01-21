@@ -2,9 +2,9 @@ name: install/cache perl tools
 
 inputs:
   tools:        { required: true,  type: string }
-  install_base: { required: false, type: string }
+  install-base: { required: false, type: string }
   cache:        { required: false, type: string, default: yes }
-  cache_gen:    { required: false, type: string, default: v1 }
+  cache-gen:    { required: false, type: string, default: v1 }
   perl-version: { required: false, type: string }
 
 outputs:
@@ -29,8 +29,8 @@ runs:
           *) cache='' ;;
         esac
         tools="${{ inputs.tools }}"
-        cache_gen="${{ inputs.cache_gen }}"
-        install_base="${{ inputs.install_base }}"
+        cache_gen="${{ inputs.cache-gen }}"
+        install_base="${{ inputs.install-base }}"
         [[ "$install_base" =~ ^[^/] ]] && install_base="$HOME/$install_base"
         : ${install_base:=$HOME/perl5}
         echo "$install_base/bin" >> $GITHUB_PATH
@@ -44,7 +44,7 @@ runs:
         [ "$cache_gen" != '' ] && hash="$hash-$cache_gen"
         [ "$cache" == workflow ] && hash="$hash-${{ github.run_id }}"
         echo "::set-output name=cache::$cache"
-        echo "::set-output name=install_base::$install_base"
+        echo "::set-output name=install-base::$install_base"
         echo "::set-output name=hash::$hash"
         perl -v
   
@@ -52,7 +52,7 @@ runs:
       if: steps.setup.outputs.cache != ''
       uses: actions/cache@v2
       with:
-        path: ${{ steps.setup.outputs.install_base }}
+        path: ${{ steps.setup.outputs.install-base }}
         key:  ${{ steps.setup.outputs.hash }}
   
     - name: install cpanminus
