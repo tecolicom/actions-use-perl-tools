@@ -65,4 +65,4 @@ runs:
       if: inputs.tools != ''
       shell: bash
       run: |
-        cpanm -n ${{ inputs.tools }}
+        cpanm -n $(echo "${{ inputs.tools }}")

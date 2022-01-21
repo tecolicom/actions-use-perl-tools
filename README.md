@@ -70,6 +70,15 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
+```yml
+- uses: office-tecoli/actions-use-perl-tools@v0
+  with:
+    tools: >-
+      App::Greple
+      App::optex::textconv
+      App::sdif
+```
+
 ### no cache
 
 ```yml
