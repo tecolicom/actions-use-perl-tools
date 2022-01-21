@@ -1,9 +1,9 @@
-# actions-use-perl-modules
+# actions-use-perl-tools
 
-This Github action isntall CPAN modules in `~/perl5` directory and
-cache it for later use.  When executed next time with same module
-list, and any other environment, such as os and perl version, are not
-changed, installed modules are extracted from the cached archive.
+This Github action isntall CPAN tools in `~/perl5` directory and cache
+it for later use.  When executed next time with same module list, and
+any other environment, such as os and perl version, are not changed,
+installed tools are extracted from the cached archive.
 
 Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
@@ -11,16 +11,16 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ```
 # inputs:
-#   modules:      { required: true,  type: string }
+#   tools:        { required: true,  type: string }
 #   install_base: { required: false, type: string }
 #   cache:        { required: false, type: string, default: yes }
 #   cache_gen:    { required: false, type: string, default: v1 }
 
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: office-tecoli/actions-use-perl-tools@v0
   with:
 
-    # CPAN modules
-    modules: ''
+    # CPAN tools
+    tools: ''
 
     # INSTALL_BASE directory
     #
@@ -61,27 +61,27 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 ### normal usage
 
 ```yml
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: office-tecoli/actions-use-perl-tools@v0
   with:
-    modules: App::Greple App::optex::textconv App::sdif
+    tools: App::Greple App::optex::textconv App::sdif
 ```
 
 ### no cache
 
 ```yml
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: office-tecoli/actions-use-perl-tools@v0
   with:
     cache: no
-    modules: App::Greple App::optex::textconv App::sdif
+    tools: App::Greple App::optex::textconv App::sdif
 ```
 
 ### cache generation
 
 ```yml
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: office-tecoli/actions-use-perl-tools@v0
   with:
     cache_gen: v2
-    modules: App::Greple App::optex::textconv App::sdif
+    tools: App::Greple App::optex::textconv App::sdif
 ```
 
 ### specify istall directory
@@ -90,8 +90,8 @@ If the directory start with /, it is taken as a full path.  If not, it
 is considered as relative from home directory.
 
 ```yml
-- uses: office-tecoli/actions-use-perl-modules@v0
+- uses: office-tecoli/actions-use-perl-tools@v0
   with:
     install_base: perl
-    modules: App::Greple App::optex::textconv App::sdif
+    tools: App::Greple App::optex::textconv App::sdif
 ```

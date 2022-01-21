@@ -1,7 +1,7 @@
-name: install/cache perl modules
+name: install/cache perl tools
 
 inputs:
-  modules:      { required: true,  type: string }
+  tools:        { required: true,  type: string }
   install_base: { required: false, type: string }
   cache:        { required: false, type: string, default: yes }
   cache_gen:    { required: false, type: string, default: v1 }
@@ -21,7 +21,7 @@ runs:
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *) cache= ;;
         esac
-        modules="${{ inputs.modules }}"
+        tools="${{ inputs.tools }}"
         cache_gen="${{ inputs.cache_gen }}"
         install_base="${{ inputs.install_base }}"
         [[ "$install_base" =~ ^[^/] ]] && install_base="$HOME/$install_base"
@@ -33,7 +33,7 @@ runs:
           PERL5LIB=$install_base/lib/perl5${PERL5LIB:+:$PERL5LIB}
           PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
-        hash=$( (perl -V; echo $modules) | md5sum | awk '{print $1}')
+        hash=$( (perl -V; echo $tools) | md5sum | awk '{print $1}')
         [ "cache_gen" != '' ] && hash="$hash-$cache_gen"
         [ "$cache" == workflow ] && hash="$hash-${{ github.run_id }}"
         echo "::set-output name=install_base::$install_base"
@@ -53,8 +53,8 @@ runs:
         perl -MApp::cpanminus -E 'say "App::cpanminus is installed."' || \
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
   
-    - name: install modules
-      if: inputs.modules != ''
+    - name: install tools
+      if: inputs.tools != ''
       shell: bash
       run: |
-        cpanm -n ${{ inputs.modules }}
+        cpanm -n ${{ inputs.tools }}

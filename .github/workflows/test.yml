@@ -16,8 +16,8 @@ jobs:
         id: action
         with:
           cache: workflow
-          modules: Acme
-      - run: perl -MAcme -E 'say "Acme!"'
+          tools: App::week
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
     needs: initial
@@ -28,8 +28,8 @@ jobs:
         id: action
         with:
           cache: workflow
-          modules: Acme
-      - run: perl -MAcme -E 'say "Acme!"'
+          tools: App::week
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
     needs: initial
@@ -40,8 +40,8 @@ jobs:
         id: action
         with:
           cache: no
-          modules: Acme
-      - run: perl -MAcme -E 'say "Acme!"'
+          tools: App::week
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   install-dir:
     needs: initial
@@ -54,9 +54,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          modules: Acme
+          tools: App::week
           install_base: ${{ steps.setup.outputs.home }}/perl
-      - run: perl -MAcme -E 'say "Acme!"'
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   relative-install-dir:
     needs: install-dir
@@ -67,9 +67,9 @@ jobs:
         id: action
         with:
           cache: workflow
-          modules: Acme
+          tools: App::week
           install_base: perl
-      - run: perl -MAcme -E 'say "Acme!"'
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   cache-gen:
     needs: initial
@@ -80,7 +80,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          modules: Acme
+          tools: App::week
           cache_gen: v2
-      - run: perl -MAcme -E 'say "Acme!"'
+      - run: week 1752/9/15
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
