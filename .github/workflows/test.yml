@@ -84,3 +84,18 @@ jobs:
           cache_gen: v2
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
+  perl-version:
+    needs: initial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: action
+        with:
+          cache: workflow
+          tools: App::ansiecho
+          cache_gen: v2
+          perl-version: '5.18'
+      - run: perl -v
+      - run: ansiecho -C '555/(132,0,41)' d i g i t a l
+      - run: test "${{ steps.action.outputs.cache-hit }}" != true

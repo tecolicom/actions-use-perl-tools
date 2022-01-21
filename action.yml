@@ -5,6 +5,7 @@ inputs:
   install_base: { required: false, type: string }
   cache:        { required: false, type: string, default: yes }
   cache_gen:    { required: false, type: string, default: v1 }
+  perl-version: { required: false, type: string }
 
 outputs:
   cache-hit:
@@ -14,6 +15,12 @@ runs:
   using: composite
   steps:
 
+    - name: install perl
+      if: inputs.perl-version != ''
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ inputs.perl-version }}
+  
     - id: setup
       shell: bash
       run: |
