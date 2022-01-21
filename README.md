@@ -5,6 +5,8 @@ cache it for later use.  When executed next time with same module
 list, and any other environment, such as os and perl version, are not
 changed, installed modules are extracted from the cached archive.
 
+Output is same as [`@actions/cache`](https://github.com/actions/cache).
+
 ## usage
 
 ```
