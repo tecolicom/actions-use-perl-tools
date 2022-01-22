@@ -1,5 +1,8 @@
 # actions-use-perl-tools
 
+![actions-use-perl-tools](https://github.com/office-tecoli/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
+
+
 This Github action isntall CPAN tools in `~/perl5` directory and cache
 it for later use.  When executed next time with same module list, and
 any other environment, such as os and perl version, are not changed,
