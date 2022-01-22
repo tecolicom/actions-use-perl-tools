@@ -16,7 +16,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho Acme
+          tools: App::ansiecho Acme@1.00
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
@@ -30,9 +30,12 @@ jobs:
           cache: workflow
           tools: |
             App::ansiecho
-            Acme
+            Acme@1.00
       - run: ansiecho -C '555/(132,0,41)' d i g i t a l
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
+      - run: |
+          cpanm Acme
+          perl -MAcme -E 'exit($Acme::VERSION > 1.0 ? 0 : 1)'
   no-cache:
     needs: initial
     runs-on: ubuntu-latest
