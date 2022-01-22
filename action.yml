@@ -19,7 +19,7 @@ runs:
       run: |
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
-          *) cache='' ;;
+          *)            cache=no ;;
         esac
         tools="${{ inputs.tools }}"
         cache_gen="${{ inputs.cache-gen }}"
@@ -42,19 +42,19 @@ runs:
         perl -v
   
     - id: cache
-      if: steps.setup.outputs.cache != ''
+      if: steps.setup.outputs.cache != 'no'
       uses: actions/cache@v2
       with:
         path: ${{ steps.setup.outputs.install-base }}
         key:  ${{ steps.setup.outputs.hash }}
   
-    - name: install cpanminus
+    - id: install-cpanminus
       shell: bash
       run: |
         perl -MApp::cpanminus -E 'say "App::cpanminus is installed."' || \
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
   
-    - name: install tools
+    - id: install
       if: inputs.tools != ''
       shell: bash
       run: |
