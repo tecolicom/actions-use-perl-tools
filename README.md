@@ -7,9 +7,13 @@ installed tools are extracted from the cached archive.
 
 Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
-## usage
+Modules installation command `cpanm` is called even if the cache was
+found.  So if the newer version is available, it is installed and
+cached for next use.
 
-```
+## Usage
+
+```yaml
 # inputs:
 #   tools:        { required: true,  type: string }
 #   install-base: { required: false, type: string }
@@ -58,13 +62,13 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ### normal usage
 
-```yml
+```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
-```yml
+```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     tools: >-
@@ -75,7 +79,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ### no cache
 
-```yml
+```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     cache: no
@@ -84,7 +88,7 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ### cache generation
 
-```yml
+```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     cache-gen: v2
@@ -93,10 +97,10 @@ Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
 ### specify install directory
 
-If the directory start with /, it is taken as a full path.  If not, it
-is considered as relative from home directory.
+If the directory does not start with slash (`/`), it is considered as
+relative to home directory.
 
-```yml
+```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     install-base: perl
