@@ -16,8 +16,8 @@ jobs:
         id: action
         with:
           cache: workflow
-          tools: App::ansiecho Acme@1.00
-      - run: ansiecho -C '555/#850029' d i g i t a l
+          tools: App::ansiecho Acme
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
     needs: initial
@@ -30,8 +30,8 @@ jobs:
           cache: workflow
           tools: |
             App::ansiecho
-            Acme@1.00
-      - run: ansiecho -C '555/#850029' d i g i t a l
+            Acme
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
     needs: initial
@@ -43,7 +43,7 @@ jobs:
         with:
           cache: no
           tools: App::ansiecho Acme
-      - run: ansiecho -C '555/#850029' d i g i t a l
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   install-dir:
     needs: initial
@@ -58,7 +58,7 @@ jobs:
           cache: workflow
           tools: App::ansiecho Acme
           install-base: ${{ steps.setup.outputs.home }}/perl
-      - run: ansiecho -C '555/#850029' d i g i t a l
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
   relative-install-dir:
     needs: install-dir
@@ -73,7 +73,7 @@ jobs:
             App::ansiecho
             Acme
           install-base: perl
-      - run: ansiecho -C '555/#850029' d i g i t a l
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" == true
   cache-gen:
     needs: initial
@@ -86,5 +86,5 @@ jobs:
           cache: workflow
           tools: App::ansiecho Acme
           cache-gen: v2
-      - run: ansiecho -C '555/#850029' d i g i t a l
+      - run: (cd __test__; . run.sh)
       - run: test "${{ steps.action.outputs.cache-hit }}" != true
