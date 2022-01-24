@@ -33,7 +33,10 @@ runs:
           PERL5LIB=$install_base/lib/perl5${PERL5LIB:+:$PERL5LIB}
           PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
-        hash=$( (perl -V; echo $tools) | md5sum | awk '{print $1}')
+        md5    /dev/null > /dev/null 2>&1 && md5=md5
+        md5sum /dev/null > /dev/null 2>&1 && md5=md5sum
+        test "md5" != ''
+        hash=$( (perl -V; echo $tools) | $md5 | awk '{print $1}')
         [ "$cache_gen" != '' ] && hash="$hash-$cache_gen"
         [ "$cache" == workflow ] && hash="$hash-${{ github.run_id }}"
         echo "::set-output name=cache::$cache"
