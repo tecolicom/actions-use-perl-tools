@@ -28,8 +28,6 @@ runs:
         : ${install_base:=$HOME/perl5}
         echo "$install_base/bin" >> $GITHUB_PATH
         sed 's/^ *//' << END >> $GITHUB_ENV
-          PERL_MB_OPT=--install_base "$install_base"
-          PERL_MM_OPT=INSTALL_BASE=$install_base
           PERL5LIB=$install_base/lib/perl5${PERL5LIB:+:$PERL5LIB}
           PERL_LOCAL_LIB_ROOT=$install_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}
         END
@@ -53,6 +51,9 @@ runs:
   
     - id: install-cpanminus
       shell: bash
+      env:
+        PERL_MB_OPT: --install_base ${{ steps.setup.outputs.install-base }}
+        PERL_MM_OPT: INSTALL_BASE=${{ steps.setup.outputs.install-base }}
       run: |
         perl -MApp::cpanminus -E 'say "App::cpanminus is installed."' || \
           curl -sL http://cpanmin.us | perl - -n App::cpanminus
@@ -60,5 +61,8 @@ runs:
     - id: install
       if: inputs.tools != ''
       shell: bash
+      env:
+        PERL_MB_OPT: --install_base ${{ steps.setup.outputs.install-base }}
+        PERL_MM_OPT: INSTALL_BASE=${{ steps.setup.outputs.install-base }}
       run: |
         cpanm -n $(echo "${{ inputs.tools }}")
