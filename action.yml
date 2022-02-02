@@ -22,40 +22,33 @@ runs:
           *)            cache=no ;;
         esac
         tools="${{ inputs.tools }}"
-        if [ "${{ inputs.sudo }}" == 'true' ]
-        then
-          perl="sudo perl"
-          cpanm="sudo cpanm"
-        else
-          perl="perl"
-          cpanm="cpanm"
-        fi
+        [ "${{ inputs.sudo }}" == 'true' ] && sudo=sudo
         md5    /dev/null > /dev/null 2>&1 && md5=md5
         md5sum /dev/null > /dev/null 2>&1 && md5=md5sum
         test "md5" != ''
         perl_key=$( perl -V | $md5 | awk '{print $1}' )
-        personal_base="$HOME/perl5"
-        mkdir -p $personal_base/{bin,lib/perl5}
-        bin="$personal_base/bin"
+        local_base="$HOME/perl5"
+        mkdir -p $local_base/{bin,lib/perl5}
+        bin="$local_base/bin"
         if [[ ! "$PATH" =~ $bin ]]
         then
-          export PATH="$personal_base/bin:$PATH"
-          echo "$personal_base/bin" >> $GITHUB_PATH
+          export PATH="$local_base/bin:$PATH"
+          echo "$local_base/bin" >> $GITHUB_PATH
         fi
-        lib="$personal_base/lib/perl5"
+        lib="$local_base/lib/perl5"
         if [[ ! "$PERL5LIB" =~ $lib ]]
         then
           export PERL5LIB="$lib${PERL5LIB:+:$PERL5LIB}"
-          export PERL_LOCAL_LIB_ROOT="$personal_base${PERL_LOCAL_LIB_ROOT:+:PERL_LOCAL_LIB_ROOT}"
+          export PERL_LOCAL_LIB_ROOT="$local_base${PERL_LOCAL_LIB_ROOT:+:$PERL_LOCAL_LIB_ROOT}"
           echo "PERL5LIB=$PERL5LIB"                       >> $GITHUB_ENV
           echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT" >> $GITHUB_ENV
         fi
-        install_base="$( $perl -E 'print join " ", @INC, split(/:+/, $ENV{PATH})' )"
+        install_base="$( perl -E 'print join " ", @INC, split(/:+/, $ENV{PATH})' )"
         cat << END
         ::set-output name=cache::$cache
-        ::set-output name=perl::$perl
+        ::set-output name=perl::${sudo:+$sudo }perl
         ::set-output name=key::$perl_key
-        ::set-output name=command::$cpanm -n
+        ::set-output name=command::${sudo:+$sudo }cpanm -n
         ::set-output name=install_base::$install_base
         END
         perl -V
