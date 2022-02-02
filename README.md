@@ -3,36 +3,30 @@
 ![actions-use-perl-tools](https://github.com/office-tecoli/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
 
 
-This Github action isntall CPAN tools in `~/perl5` directory and cache
-it for later use.  When executed next time with same module list, and
-any other environment, such as os and perl version, are not changed,
-installed tools are extracted from the cached archive.
+This Github action isntall CPAN tools and cache it for later use.
+When executed next time with same module list, and any other
+environment, such as os and perl version, are not changed, installed
+tools are extracted from the cached archive.
 
 Output is same as [`@actions/cache`](https://github.com/actions/cache).
 
-Modules installation command `cpanm` is called even if the cache was
-found.  So if the newer version is available, it is installed and
-cached for next use.
+Modules installation is done even if the cache was found.  So if the
+newer version is available, it is installed and cached for next use.
 
 ## Usage
 
 ```yaml
 # inputs:
 #   tools:        { required: true,  type: string }
-#   install-base: { required: false, type: string }
 #   cache:        { required: false, type: string, default: yes }
 #   cache-gen:    { required: false, type: string, default: v1 }
+#   sudo :        { required: false, type: boolean, default: false }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
 
     # CPAN tools
     tools: ''
-
-    # INSTALL_BASE directory
-    #
-    # Default: ~/perl5
-    install-base: ''
 
     # Cache strategey
     #
@@ -48,13 +42,18 @@ cached for next use.
     #
     # Default: v1
     cache-gen: v1
+
+    # Install by root
+    #
+    # Default: false
+    sudo: false
 ```
 
 ## Side effects
 
 - `~/perl5/bin` is appended to `$GITHUB_PATH` file.
 - `PERL_MB_OPT`, `PERL_MM_OPT`, `PERL5LIB`, `PERL_LOCAL_LIB_ROOT`
-  environment variables are set in `$GITHUB_ENV` file.
+  environment variables may be set in `$GITHUB_ENV` file.
 
 ## Senarios
 
@@ -95,17 +94,5 @@ cached for next use.
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
     cache-gen: v2
-    tools: App::Greple App::optex::textconv App::sdif
-```
-
-### specify install directory
-
-If the directory does not start with slash (`/`), it is considered as
-relative to home directory.
-
-```yaml
-- uses: office-tecoli/actions-use-perl-tools@v0
-  with:
-    install-base: perl
     tools: App::Greple App::optex::textconv App::sdif
 ```

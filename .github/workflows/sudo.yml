@@ -1,4 +1,4 @@
-name: test
+name: sudo-test
 
 on:
   push:
@@ -21,6 +21,7 @@ jobs:
         with:
           cache: workflow
           tools: ${{ steps.setup.outputs.tools }}
+          sudo: true
       - run: |
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
@@ -39,6 +40,7 @@ jobs:
         with:
           cache: workflow
           tools: ${{ steps.setup.outputs.tools }}
+          sudo: true
       - run: |
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
@@ -57,6 +59,7 @@ jobs:
         with:
           cache: no
           tools: ${{ steps.setup.outputs.tools }}
+          sudo: true
       - run: |
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
@@ -76,6 +79,7 @@ jobs:
           cache: workflow
           cache-gen: v2
           tools: ${{ steps.setup.outputs.tools }}
+          sudo: true
       - run: |
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |

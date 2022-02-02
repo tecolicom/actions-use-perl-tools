@@ -1,0 +1,61 @@
+name: setup-perl
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  initial:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl: [ '5.18', '5.20', '5.34' ]
+    steps:
+      - uses: actions/checkout@v2
+      - id: setup-perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+      - id: setup
+        run: |
+          tools=$(./__test__/run.sh -l)
+          echo "::set-output name=tools::$tools"
+      - uses: ./
+        id: action
+        with:
+          cache: workflow
+          tools: ${{ steps.setup.outputs.tools }}
+      - run: |
+          (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
+      - run: |
+          test "${{ steps.action.outputs.cache-hit }}" != true
+
+  cached:
+    needs: initial
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl: [ '5.18', '5.20', '5.34' ]
+    steps:
+      - uses: actions/checkout@v2
+      - id: setup-perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+      - id: setup
+        run: |
+          tools=$(./__test__/run.sh -l)
+          echo "::set-output name=tools::$tools"
+      - uses: ./
+        id: action
+        with:
+          cache: workflow
+          tools: ${{ steps.setup.outputs.tools }}
+      - run: |
+          (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
+      - run: |
+          test "${{ steps.action.outputs.cache-hit }}" == true
