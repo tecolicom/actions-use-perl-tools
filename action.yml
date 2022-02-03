@@ -23,10 +23,7 @@ runs:
         esac
         tools="${{ inputs.tools }}"
         [ "${{ inputs.sudo }}" == 'true' ] && sudo=sudo
-        md5    /dev/null > /dev/null 2>&1 && md5=md5
-        md5sum /dev/null > /dev/null 2>&1 && md5=md5sum
-        test "md5" != ''
-        perl_key=$( perl -V | $md5 | awk '{print $1}' )
+        perl_key=$( perl -V | (md5sum||md5)2>/dev/null | awk '{print $1}' )
         local_base="$HOME/perl5"
         mkdir -p $local_base/{bin,lib/perl5}
         bin="$local_base/bin"
