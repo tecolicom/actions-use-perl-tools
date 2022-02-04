@@ -17,6 +17,7 @@ runs:
     - id: setup
       shell: bash
       run: |
+        : setup
         case "${{ inputs.cache }}" in
           yes|workflow) cache="${{ inputs.cache }}" ;;
           *)            cache=no ;;
