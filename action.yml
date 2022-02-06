@@ -1,10 +1,10 @@
 name: install/cache perl tools
 
 inputs:
-  tools:        { required: true,  type: string }
-  cache:        { required: false, type: string, default: yes }
-  cache-gen:    { required: false, type: string, default: v1 }
-  sudo:         { required: false, type: boolean, default: false }
+  tools:     { required: true,  type: string }
+  cache:     { required: false, type: string, default: yes }
+  cache-gen: { required: false, type: string, default: v1 }
+  sudo:      { required: false, type: boolean, default: false }
 
 outputs:
   cache-hit:
@@ -19,8 +19,8 @@ runs:
       run: |
         : setup use-perl-tools
         case "${{ inputs.cache }}" in
-          yes|workflow) cache="${{ inputs.cache }}" ;;
-          *)            cache=no ;;
+            yes|workflow) cache="${{ inputs.cache }}" ;;
+            *)            cache=no ;;
         esac
         tools="${{ inputs.tools }}"
         [ "${{ inputs.sudo }}" == 'true' ] && sudo=sudo
@@ -30,16 +30,16 @@ runs:
         bin="$local_base/bin"
         if [[ ! "$PATH" =~ $bin ]]
         then
-          export PATH="$local_base/bin:$PATH"
-          echo "$local_base/bin" >> $GITHUB_PATH
+            export PATH="$local_base/bin:$PATH"
+            echo "$local_base/bin" >> $GITHUB_PATH
         fi
         lib="$local_base/lib/perl5"
         if [[ ! "$PERL5LIB" =~ $lib ]]
         then
-          export PERL5LIB="$lib${PERL5LIB:+:$PERL5LIB}"
-          export PERL_LOCAL_LIB_ROOT="$local_base${PERL_LOCAL_LIB_ROOT:+:$PERL_LOCAL_LIB_ROOT}"
-          echo "PERL5LIB=$PERL5LIB"                       >> $GITHUB_ENV
-          echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT" >> $GITHUB_ENV
+            export PERL5LIB="$lib${PERL5LIB:+:$PERL5LIB}"
+            export PERL_LOCAL_LIB_ROOT="$local_base${PERL_LOCAL_LIB_ROOT:+:$PERL_LOCAL_LIB_ROOT}"
+            echo "PERL5LIB=$PERL5LIB"                       >> $GITHUB_ENV
+            echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT" >> $GITHUB_ENV
         fi
         install_base="$( perl -E 'print join " ", @INC, split(/:+/, $ENV{PATH})' )"
         cat << END
@@ -54,7 +54,7 @@ runs:
     - id: install-cpanminus
       uses: office-tecoli/actions-install-and-cache@v0
       with:
-        command:   cpanm --version || curl -sL http://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n
+        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n
         directory: ${{ steps.setup.outputs.install_base }}
         key:       ${{ steps.setup.outputs.key }}
         target:    App::cpanminus
