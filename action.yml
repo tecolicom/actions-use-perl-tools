@@ -73,7 +73,7 @@ runs:
             path=$(perldoc -lm App::cpanminus)
             for dir in ${{ steps.setup.outputs.install_base }}
             do
-                [ -x $dir/cpanm ] && echo $dir | tee $GITHUB_PATH && break
+                [ -x $dir/cpanm ] && echo $dir | tee -a $GITHUB_PATH && break
             done
         fi
 
