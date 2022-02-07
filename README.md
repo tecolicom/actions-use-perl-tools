@@ -91,3 +91,7 @@ newer version is available, it is installed and cached for next use.
     key: v2
     tools: App::Greple App::optex::textconv App::sdif
 ```
+
+## See Also
+
+### [office-tecoli/actions](https://github.com/office-tecoli/actions)
