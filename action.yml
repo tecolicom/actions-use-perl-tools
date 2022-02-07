@@ -43,7 +43,7 @@ runs:
             echo "PERL5LIB=$PERL5LIB"                       >> $GITHUB_ENV
             echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT" >> $GITHUB_ENV
         fi
-        install_base="$( perl -E 'print join " ", @INC, split(/:+/, $ENV{PATH})' )"
+        install_base="$($GITHUB_ACTION_PATH/install-base.pl)"
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=perl::${sudo:+$sudo }perl
