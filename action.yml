@@ -3,7 +3,6 @@ name: install/cache perl tools
 inputs:
   tools:     { required: true,  type: string }
   cache:     { required: false, type: string, default: yes }
-  cache-gen: { required: false, type: string, default: v1 }
   sudo:      { required: false, type: boolean, default: false }
   key:       { required: false, type: string }
 
@@ -62,7 +61,6 @@ runs:
         key:       ${{ steps.setup.outputs.key }}
         target:    App::cpanminus
         cache:     ${{ inputs.cache }}
-        cache-gen: ${{ inputs.cache-gen }}
   
     - id: update
       uses: office-tecoli/actions-install-and-cache@v0
@@ -72,4 +70,3 @@ runs:
         key:       ${{ steps.setup.outputs.key }}
         target:    ${{ inputs.tools }}
         cache:     ${{ inputs.cache }}
-        cache-gen: ${{ inputs.cache-gen }}

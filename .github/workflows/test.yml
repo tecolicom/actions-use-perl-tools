@@ -61,7 +61,7 @@ jobs:
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
           test "${{ steps.action.outputs.cache-hit }}" != true
-  cache-gen:
+  key:
     needs: initial
     runs-on: ubuntu-latest
     steps:
@@ -74,7 +74,7 @@ jobs:
         id: action
         with:
           cache: workflow
-          cache-gen: v2
+          key: v2
           tools: ${{ steps.setup.outputs.tools }}
       - run: |
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
