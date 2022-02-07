@@ -62,6 +62,10 @@ runs:
         target:    App::cpanminus
         cache:     ${{ inputs.cache }}
   
+    - id: check-cpanminus
+      shell: bash
+      run: which cpanm
+
     - id: update
       uses: office-tecoli/actions-install-and-cache@v0
       with:
