@@ -17,10 +17,10 @@ newer version is available, it is installed and cached for next use.
 
 ```yaml
 # inputs:
-#   tools:        { required: true,  type: string }
-#   cache:        { required: false, type: string, default: yes }
-#   cache-gen:    { required: false, type: string, default: v1 }
-#   sudo :        { required: false, type: boolean, default: false }
+#   tools: { required: true,  type: string }
+#   cache: { required: false, type: string, default: yes }
+#   key:   { required: false, type: string, default: v1 }
+#   sudo:  { required: false, type: boolean, default: false }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
@@ -36,12 +36,8 @@ newer version is available, it is installed and cached for next use.
     # anything else means 'no'
     cache: yes
 
-    # Cache generation.
-    # You can set any string to this parameter and different generation
-    # number produces different cache key.
-    #
-    # Default: v1
-    cache-gen: v1
+    # Additional cache key
+    key: ''
 
     # Install by root
     #
@@ -59,8 +55,7 @@ newer version is available, it is installed and cached for next use.
 
 - [normal usage](#normal-usage)
 - [no cache](#no-cache)
-- [cache generation](#cache-generation)
-- [specify istall directory](#specify-istall-directory)
+- [additional cache key](#additional-cache-key)
 
 ### normal usage
 
@@ -88,11 +83,11 @@ newer version is available, it is installed and cached for next use.
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
-### cache generation
+### additional cache key
 
 ```yaml
 - uses: office-tecoli/actions-use-perl-tools@v0
   with:
-    cache-gen: v2
+    key: v2
     tools: App::Greple App::optex::textconv App::sdif
 ```
