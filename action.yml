@@ -65,12 +65,11 @@ runs:
     - id: check-cpanminus
       shell: bash
       run: |
-        : check cpanminus
+        : check cpanm command in path
         if cpanm --version &> /dev/null
         then
             which cpanm
         else
-            path=$(perldoc -lm App::cpanminus)
             for dir in ${{ steps.setup.outputs.install_base }}
             do
                 [ -x $dir/cpanm ] && echo $dir | tee -a $GITHUB_PATH && break
