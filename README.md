@@ -3,7 +3,7 @@
 ![actions-use-perl-tools](https://github.com/office-tecoli/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
 
 
-This Github action isntall CPAN tools and cache it for later use.
+This GitHub action isntall CPAN tools and cache it for later use.
 When executed next time with same module list, and any other
 environment, such as os and perl version, are not changed, installed
 tools are extracted from the cached archive.
@@ -19,7 +19,7 @@ newer version is available, it is installed and cached for next use.
 # inputs:
 #   tools: { required: true,  type: string }
 #   cache: { required: false, type: string, default: yes }
-#   key:   { required: false, type: string, default: v1 }
+#   key:   { required: false, type: string }
 #   sudo:  { required: false, type: boolean, default: false }
 
 - uses: office-tecoli/actions-use-perl-tools@v0
