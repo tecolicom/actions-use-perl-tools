@@ -56,7 +56,7 @@ runs:
     - id: install-cpanminus
       uses: office-tecoli/actions-install-and-cache@v0
       with:
-        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n
+        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n -v
         directory: ${{ steps.setup.outputs.install_base }}
         key:       ${{ steps.setup.outputs.key }}
         target:    App::cpanminus
