@@ -28,12 +28,12 @@ newer version is available, it is installed and cached for next use.
     # CPAN tools
     tools: ''
 
-    # Cache strategey
+    # Cache strategy
     #
     # yes:      activate cache
+    # no:       no cache
     # workflow: effective within same workflow (mainly for test)
     #
-    # anything else means 'no'
     cache: yes
 
     # Additional cache key
