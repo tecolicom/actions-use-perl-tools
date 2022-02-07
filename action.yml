@@ -64,7 +64,19 @@ runs:
   
     - id: check-cpanminus
       shell: bash
-      run: which cpanm
+      run: |
+        if cpanm --version
+        then
+          which cpanm
+        else
+          path=$(perldoc -lm App::cpanminus)
+          if [[ "$path" =~ ^(.*)/lib/ ]]
+          then
+            bin=${BASH_REMATCH[1]}/bin
+            cpanm=$bin/cpanm
+            [ -x $cpanm ] && echo $bin >> $GITHUB_PATH
+          fi
+        fi
 
     - id: update
       uses: office-tecoli/actions-install-and-cache@v0
