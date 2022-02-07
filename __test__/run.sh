@@ -27,7 +27,6 @@ for tool in $*
 do
     case $tool in
 	Acme)
-	    perl -M$tool -MData::Dumper -E 'print Dumper \%INC, \@INC'
 	    [ $? == 0 ] && echo "ok - $tool" && (( success++ ))
 	    ;;
 	App::Greple)
