@@ -1,14 +1,14 @@
 name: install/cache perl tools
 
 inputs:
-  tools:     { required: true,  type: string }
-  cache:     { required: false, type: string, default: yes }
-  sudo:      { required: false, type: boolean, default: false }
-  key:       { required: false, type: string }
+  tools: { required: true,  type: string }
+  cache: { required: false, type: string, default: yes }
+  sudo:  { required: false, type: boolean, default: false }
+  key:   { required: false, type: string }
 
 outputs:
   cache-hit:
-    value: ${{ steps.update.outputs.cache-hit }}
+    value: ${{ steps.install.outputs.cache-hit }}
 
 runs:
   using: composite
@@ -74,10 +74,9 @@ runs:
             do
                 [ -x $dir/cpanm ] && echo $dir | tee -a $GITHUB_PATH && break
             done
-            exit
         fi
 
-    - id: update
+    - id: install
       uses: office-tecoli/actions-install-and-cache@v0
       with:
         command:   ${{ steps.setup.outputs.command }}
