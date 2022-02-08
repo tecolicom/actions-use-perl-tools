@@ -66,14 +66,15 @@ runs:
       shell: bash
       run: |
         : check cpanm command in path
-        if cpanm --version &> /dev/null
+        if cpanm="$(which cpanm)"
         then
-            which cpanm
+            echo "found $cpanm"
         else
             for dir in ${{ steps.setup.outputs.install_base }}
             do
                 [ -x $dir/cpanm ] && echo $dir | tee -a $GITHUB_PATH && break
             done
+            exit
         fi
 
     - id: update
