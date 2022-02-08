@@ -51,12 +51,12 @@ runs:
         ::set-output name=command::${sudo:+$sudo }cpanm -n
         ::set-output name=install_base::$install_base
         END
-        perl -V
+        perl -v
   
     - id: install-cpanminus
       uses: office-tecoli/actions-install-and-cache@v0
       with:
-        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n -v
+        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n
         directory: ${{ steps.setup.outputs.install_base }}
         key:       ${{ steps.setup.outputs.key }}
         target:    App::cpanminus
