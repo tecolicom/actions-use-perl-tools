@@ -1,11 +1,11 @@
 name: install/cache perl tools
 
 inputs:
-  tools: { required: true,  type: string }
-  cache: { required: false, type: string, default: yes }
-  sudo:  { required: false, type: boolean, default: false }
-  key:   { required: false, type: string }
-  debug: { required: false, type: boolean, default: false }
+  tools:   { required: true,  type: string }
+  cache:   { required: false, type: string, default: yes }
+  sudo:    { required: false, type: boolean, default: false }
+  key:     { required: false, type: string }
+  verbose: { required: false, type: boolean, default: false }
 
 outputs:
   cache-hit:
@@ -55,7 +55,7 @@ runs:
         ::set-output name=cache::$cache
         ::set-output name=perl::${sudo:+$sudo }perl
         ::set-output name=key::$key
-        ::set-output name=command::${sudo:+$sudo }ls -lR $HOME; cpanm -n -v
+        ::set-output name=command::${sudo:+$sudo }ls -lR $HOME/perl5; cpanm -n -v
         ::set-output name=install_base::$install_base
         ::set-output name=install::${install[@]}
         END
@@ -69,6 +69,8 @@ runs:
         key:       ${{ steps.setup.outputs.key }}
         target:    App::cpanminus
         cache:     ${{ inputs.cache }}
+        verbose:   ${{ inputs.verbose }}
+        sudo:      ${{ inputs.sudo }}
   
     - id: check-cpanminus
       shell: bash
@@ -93,3 +95,5 @@ runs:
         key:       ${{ steps.setup.outputs.key }}
         target:    ${{ steps.setup.outputs.install }}
         cache:     ${{ inputs.cache }}
+        verbose:   ${{ inputs.verbose }}
+        sudo:      ${{ inputs.sudo }}

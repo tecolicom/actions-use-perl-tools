@@ -18,6 +18,7 @@ jobs:
         with:
           cache: workflow
           tools: App::cpanminus
+          verbose: true
       - run: |
           ls -Rl $HOME/perl5
           whoami
@@ -33,6 +34,7 @@ jobs:
         with:
           cache: workflow
           tools: Acme
+          verbose: true
       - run: |
           cpanm --version
           perl -MAcme -E 'say "ok"'
