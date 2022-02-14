@@ -37,6 +37,8 @@ runs:
             echo "$local_base/bin" >> $GITHUB_PATH
         fi
         lib="$local_base/lib/perl5"
+        cpanm=cpanm
+        [ "${{ inputs.verbose }}" = true ] && cpanm+=" -v"
         if [[ ! "$PERL5LIB" =~ $lib ]]
         then
             export PERL5LIB="$lib${PERL5LIB:+:$PERL5LIB}"
@@ -55,7 +57,7 @@ runs:
         ::set-output name=cache::$cache
         ::set-output name=perl::${sudo:+$sudo }perl
         ::set-output name=key::$key
-        ::set-output name=command::${sudo:+$sudo }ls -lR $HOME/perl5; cpanm -n -v
+        ::set-output name=command::${sudo:+$sudo }${cpanm} -n
         ::set-output name=install_base::$install_base
         ::set-output name=install::${install[@]}
         END
