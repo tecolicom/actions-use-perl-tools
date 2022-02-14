@@ -1,0 +1,38 @@
+name: cpanminus
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  initial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: action
+        with:
+          cache: workflow
+          tools: App::cpanminus
+      - run: |
+          ls -Rl $HOME/perl5
+          whoami
+          cpanm --version
+
+  cached-cpanm-with-others:
+    needs: initial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        id: action
+        with:
+          cache: workflow
+          tools: Acme
+      - run: |
+          cpanm --version
+          perl -MAcme -E 'say "ok"'

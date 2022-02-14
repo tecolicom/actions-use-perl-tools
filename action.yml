@@ -5,6 +5,7 @@ inputs:
   cache: { required: false, type: string, default: yes }
   sudo:  { required: false, type: boolean, default: false }
   key:   { required: false, type: string }
+  debug: { required: false, type: boolean, default: false }
 
 outputs:
   cache-hit:
@@ -44,12 +45,19 @@ runs:
             echo "PERL_LOCAL_LIB_ROOT=$PERL_LOCAL_LIB_ROOT" >> $GITHUB_ENV
         fi
         install_base="$($GITHUB_ACTION_PATH/install-base.pl)"
+        # remove App::cpanminus from install list
+        declare install
+        for arg in $tools
+        do
+            [ "$arg" != App::cpanminus ] && install+=($arg)
+        done
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=perl::${sudo:+$sudo }perl
         ::set-output name=key::$key
-        ::set-output name=command::${sudo:+$sudo }cpanm -n
+        ::set-output name=command::${sudo:+$sudo }ls -lR $HOME; cpanm -n -v
         ::set-output name=install_base::$install_base
+        ::set-output name=install::${install[@]}
         END
         perl -v
   
@@ -77,10 +85,11 @@ runs:
         fi
 
     - id: install
+      if: steps.setup.outputs.install != ''
       uses: office-tecoli/actions-install-and-cache@v0
       with:
         command:   ${{ steps.setup.outputs.command }}
         directory: ${{ steps.setup.outputs.install_base }}
         key:       ${{ steps.setup.outputs.key }}
-        target:    ${{ inputs.tools }}
+        target:    ${{ steps.setup.outputs.install }}
         cache:     ${{ inputs.cache }}
