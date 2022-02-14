@@ -48,7 +48,7 @@ runs:
         fi
         install_base="$($GITHUB_ACTION_PATH/install-base.pl)"
         # remove App::cpanminus from install list
-        declare install
+        declare -a install
         for arg in $tools
         do
             [ "$arg" != App::cpanminus ] && install+=($arg)
