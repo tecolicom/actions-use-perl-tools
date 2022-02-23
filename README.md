@@ -1,6 +1,6 @@
 # actions-use-perl-tools
 
-![actions-use-perl-tools](https://github.com/office-tecoli/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
+![actions-use-perl-tools](https://github.com/tecoli-com/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
 
 
 This GitHub action isntall CPAN tools and cache it for later use.
@@ -22,7 +22,7 @@ newer version is available, it is installed and cached for next use.
 #   key:   { required: false, type: string }
 #   sudo:  { required: false, type: boolean, default: false }
 
-- uses: office-tecoli/actions-use-perl-tools@v0
+- uses: tecoli-com/actions-use-perl-tools@v0
   with:
 
     # CPAN tools
@@ -60,13 +60,13 @@ newer version is available, it is installed and cached for next use.
 ### normal usage
 
 ```yaml
-- uses: office-tecoli/actions-use-perl-tools@v0
+- uses: tecoli-com/actions-use-perl-tools@v0
   with:
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
 ```yaml
-- uses: office-tecoli/actions-use-perl-tools@v0
+- uses: tecoli-com/actions-use-perl-tools@v0
   with:
     tools: >-
       App::Greple
@@ -77,7 +77,7 @@ newer version is available, it is installed and cached for next use.
 ### no cache
 
 ```yaml
-- uses: office-tecoli/actions-use-perl-tools@v0
+- uses: tecoli-com/actions-use-perl-tools@v0
   with:
     cache: no
     tools: App::Greple App::optex::textconv App::sdif
@@ -86,7 +86,7 @@ newer version is available, it is installed and cached for next use.
 ### additional cache key
 
 ```yaml
-- uses: office-tecoli/actions-use-perl-tools@v0
+- uses: tecoli-com/actions-use-perl-tools@v0
   with:
     key: v2
     tools: App::Greple App::optex::textconv App::sdif
@@ -94,4 +94,4 @@ newer version is available, it is installed and cached for next use.
 
 ## See Also
 
-### [office-tecoli/actions](https://github.com/office-tecoli/actions)
+### [tecoli-com/actions](https://github.com/tecoli-com/actions)
