@@ -24,10 +24,12 @@ jobs:
         with:
           cache: workflow
           tools: ${{ steps.setup.outputs.tools }}
-          verbose: true
+          verbose: false
       - run: |
+          : run test
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
+          : check cache status
           test "${{ steps.action.outputs.cache-hit }}" != true
   cached:
     needs: initial
@@ -46,10 +48,12 @@ jobs:
         with:
           cache: workflow
           tools: ${{ steps.setup.outputs.tools }}
-          verbose: true
+          verbose: false
       - run: |
+          : run test
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
+          : check cache status
           test "${{ steps.action.outputs.cache-hit }}" == true
   no-cache:
     needs: initial
@@ -65,10 +69,12 @@ jobs:
         with:
           cache: no
           tools: ${{ steps.setup.outputs.tools }}
-          verbose: true
+          verbose: false
       - run: |
+          : run test
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
+          : check cache status
           test "${{ steps.action.outputs.cache-hit }}" != true
   key:
     needs: initial
@@ -85,8 +91,10 @@ jobs:
           cache: workflow
           key: v2
           tools: ${{ steps.setup.outputs.tools }}
-          verbose: true
+          verbose: false
       - run: |
+          : run test
           (cd __test__; ./run.sh ${{ steps.setup.outputs.tools }})
       - run: |
+          : check cache status
           test "${{ steps.action.outputs.cache-hit }}" != true
