@@ -1,4 +1,4 @@
-name: install/cache perl tools
+name: install-and-cache perl tools
 description: 'GitHub Action to install and cache Perl tools'
 author: 'Office TECOLI, LLC'
 branding: 
