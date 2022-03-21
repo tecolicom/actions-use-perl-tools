@@ -2,8 +2,8 @@ name: install-and-cache perl tools
 description: 'GitHub Action to install and cache Perl tools'
 author: 'Office TECOLI, LLC'
 branding: 
-  color: 'orange'
-  icon: 'plus-square'
+  color: orange
+  icon:  type
 
 inputs:
   tools:   { required: true,  type: string }
