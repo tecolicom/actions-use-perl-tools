@@ -69,12 +69,14 @@ runs:
         perl -v
   
     - id: install-cpanminus
-      uses: tecoli-com/actions-install-and-cache@v0.3
+      uses: tecoli-com/actions-install-and-cache@v0.4
       with:
-        command:   cpanm --version || curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n
+        run: |-
+          cpanm --version || \
+              curl -sL https://cpanmin.us | ${{ steps.setup.outputs.perl }} - -n \
+              App::cpanminus
         path:    ${{ steps.setup.outputs.install_base }}
         key:     ${{ steps.setup.outputs.key }}
-        target:  App::cpanminus
         cache:   ${{ inputs.cache }}
         verbose: ${{ inputs.verbose }}
         sudo:    ${{ inputs.sudo }}
@@ -95,12 +97,11 @@ runs:
 
     - id: install
       if: steps.setup.outputs.install != ''
-      uses: tecoli-com/actions-install-and-cache@v0.3
+      uses: tecoli-com/actions-install-and-cache@v0.4
       with:
-        command: ${{ steps.setup.outputs.command }}
+        run:     ${{ steps.setup.outputs.command }} ${{ steps.setup.outputs.install }}
         path:    ${{ steps.setup.outputs.install_base }}
         key:     ${{ steps.setup.outputs.key }}
-        target:  ${{ steps.setup.outputs.install }}
         cache:   ${{ inputs.cache }}
         verbose: ${{ inputs.verbose }}
         sudo:    ${{ inputs.sudo }}
