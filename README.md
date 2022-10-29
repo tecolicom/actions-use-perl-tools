@@ -17,10 +17,11 @@ newer version is available, it is installed and cached for next use.
 
 ```yaml
 # inputs:
-#   tools: { required: true,  type: string }
-#   cache: { required: false, type: string, default: yes }
-#   key:   { required: false, type: string }
-#   sudo:  { required: false, type: boolean, default: false }
+#   tools:   { required: true,  type: string }
+#   cache:   { required: false, type: string, default: yes }
+#   key:     { required: false, type: string }
+#   sudo:    { required: false, type: boolean, default: false }
+#   verbose: { required: false, type: boolean, default: false }
 
 - uses: tecoli-com/actions-use-perl-tools@v0
   with:
@@ -43,6 +44,9 @@ newer version is available, it is installed and cached for next use.
     #
     # Default: false
     sudo: false
+
+    # Verbose output
+    verbose: false
 ```
 
 ## Side effects
