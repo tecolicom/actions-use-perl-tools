@@ -23,7 +23,7 @@ jobs:
       - id: setup
         run: |
           tools=$(./__test__/run.sh -l)
-          echo "::set-output name=tools::$tools"
+          echo "tools=$tools" >> $GITHUB_OUTPUT
       - uses: ./
         id: action
         with:
@@ -49,7 +49,7 @@ jobs:
       - id: setup
         run: |
           tools=$(./__test__/run.sh -l)
-          echo "::set-output name=tools::$tools"
+          echo "tools=$tools" >> $GITHUB_OUTPUT
       - uses: ./
         id: action
         with:

@@ -58,13 +58,13 @@ runs:
         do
             [ "$arg" != App::cpanminus ] && install+=($arg)
         done
-        cat << END
-        ::set-output name=cache::$cache
-        ::set-output name=perl::${sudo:+$sudo }perl
-        ::set-output name=key::$key
-        ::set-output name=command::${sudo:+$sudo }${cpanm} -n
-        ::set-output name=install_base::$install_base
-        ::set-output name=install::${install[@]}
+        cat << END >> $GITHUB_OUTPUT
+        cache=$cache
+        perl=${sudo:+$sudo }perl
+        key=$key
+        command=${sudo:+$sudo }${cpanm} -n
+        install_base=$install_base
+        install=${install[@]}
         END
         perl -v
   
