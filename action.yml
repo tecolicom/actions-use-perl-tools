@@ -69,7 +69,7 @@ runs:
         perl -v
   
     - id: install-cpanminus
-      uses: tecoli-com/actions-install-and-cache@v0.5
+      uses: tecolicom/actions-install-and-cache@v1
       with:
         run: |-
           cpanm --version || \
@@ -97,7 +97,7 @@ runs:
 
     - id: install
       if: steps.setup.outputs.install != ''
-      uses: tecoli-com/actions-install-and-cache@v0.5
+      uses: tecolicom/actions-install-and-cache@v1
       with:
         run:     ${{ steps.setup.outputs.command }} ${{ steps.setup.outputs.install }}
         path:    ${{ steps.setup.outputs.install_base }}

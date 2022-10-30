@@ -23,7 +23,7 @@ newer version is available, it is installed and cached for next use.
 #   sudo:    { required: false, type: boolean, default: false }
 #   verbose: { required: false, type: boolean, default: false }
 
-- uses: tecoli-com/actions-use-perl-tools@v0
+- uses: tecolicom/actions-use-perl-tools@v1
   with:
 
     # CPAN tools
@@ -64,13 +64,13 @@ newer version is available, it is installed and cached for next use.
 ### normal usage
 
 ```yaml
-- uses: tecoli-com/actions-use-perl-tools@v0
+- uses: tecolicom/actions-use-perl-tools@v1
   with:
     tools: App::Greple App::optex::textconv App::sdif
 ```
 
 ```yaml
-- uses: tecoli-com/actions-use-perl-tools@v0
+- uses: tecolicom/actions-use-perl-tools@v1
   with:
     tools: >-
       App::Greple
@@ -81,7 +81,7 @@ newer version is available, it is installed and cached for next use.
 ### no cache
 
 ```yaml
-- uses: tecoli-com/actions-use-perl-tools@v0
+- uses: tecolicom/actions-use-perl-tools@v1
   with:
     cache: no
     tools: App::Greple App::optex::textconv App::sdif
@@ -90,7 +90,7 @@ newer version is available, it is installed and cached for next use.
 ### additional cache key
 
 ```yaml
-- uses: tecoli-com/actions-use-perl-tools@v0
+- uses: tecolicom/actions-use-perl-tools@v1
   with:
     key: v2
     tools: App::Greple App::optex::textconv App::sdif
