@@ -1,6 +1,6 @@
 # actions-use-perl-tools
 
-![actions-use-perl-tools](https://github.com/tecoli-com/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
+![actions-use-perl-tools](https://github.com/tecolicom/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
 
 
 This GitHub action isntall CPAN tools and cache it for later use.
@@ -98,4 +98,4 @@ newer version is available, it is installed and cached for next use.
 
 ## See Also
 
-### [tecoli-com/actions](https://github.com/tecoli-com/actions)
+### [tecolicom/actions](https://github.com/tecolicom/actions)
