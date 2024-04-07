@@ -3,7 +3,7 @@
 ![actions-use-perl-tools](https://github.com/tecolicom/actions-use-perl-tools/actions/workflows/test.yml/badge.svg)
 
 
-This GitHub action isntall CPAN tools and cache it for later use.
+This GitHub action install CPAN tools and cache it for later use.
 When executed next time with same module list, and any other
 environment, such as os and perl version, are not changed, installed
 tools are extracted from the cached archive.
