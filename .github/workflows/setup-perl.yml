@@ -1,3 +1,4 @@
+---
 name: setup-perl
 
 on:
@@ -13,9 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ '5.18', '5.20', '5.34' ]
+        perl:
+          - '5.18'
+          - '5.20'
+          - '5.34'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: setup-perl
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -39,9 +43,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ '5.18', '5.20', '5.34' ]
+        perl:
+          - '5.18'
+          - '5.20'
+          - '5.34'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: setup-perl
         uses: shogo82148/actions-setup-perl@v1
         with:
