@@ -1,3 +1,11 @@
+## v1.3
+
+- run cpanm command with --quiet option by default
+
+## v1.2
+
+- Merge pull request #2 from glasswalk3r/chore/checkout-action-upgrade
+
 ## v1.1
 
 - Version 1.1
