@@ -22,6 +22,7 @@ newer version is available, it is installed and cached for next use.
 #   key:     { required: false, type: string }
 #   sudo:    { required: false, type: boolean, default: false }
 #   verbose: { required: false, type: boolean, default: false }
+#   quiet:   { required: false, type: boolean, default: true }
 
 - uses: tecolicom/actions-use-perl-tools@v1
   with:
@@ -47,6 +48,9 @@ newer version is available, it is installed and cached for next use.
 
     # Verbose output
     verbose: false
+
+    # Quiet output
+    quiet: false
 ```
 
 ## Side effects

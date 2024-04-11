@@ -11,6 +11,7 @@ inputs:
   sudo:    { required: false, type: boolean, default: false }
   key:     { required: false, type: string }
   verbose: { required: false, type: boolean, default: false }
+  quiet:   { required: false, type: boolean, default: true }
 
 outputs:
   cache-hit:
@@ -43,7 +44,8 @@ runs:
         fi
         lib="$local_base/lib/perl5"
         cpanm=cpanm
-        [ "${{ inputs.verbose }}" = true ] && cpanm+=" -v"
+        [ "${{ inputs.verbose }}" = true ] && cpanm+=" --verbose"
+        [ "${{ inputs.quiet }}"   = true ] && cpanm+=" --quiet"
         if [[ ! "$PERL5LIB" =~ $lib ]]
         then
             export PERL5LIB="$lib${PERL5LIB:+:$PERL5LIB}"
